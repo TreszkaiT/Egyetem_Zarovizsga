@@ -26,7 +26,7 @@ public class Egyetem_Zarovizsga {
         System.out.println("6. Fibonacci rekurzív: "+FibonacciRekurziv(10));
         System.err.println("7. Legnagyobb egész kitevő: "+LegnagyobbEgeszKitevo(25));
         System.err.println("8. Kilencesek száma: "+KilencesekSzama(25989));
-        System.err.println("9. Kettes szám második bitje: "+KettesMasodikBit(4));
+        System.err.println("9. Kettes szám második bitje: "+KettesMasodikBit(128));
         //System.out.println(NegyzetgyokRekurziv(50,25));
     }
     
@@ -183,6 +183,9 @@ számrendszerbeli felírásában a jobbról második bitje 1 vagy 0 (ne alakíts
     
     private static Integer KettesMasodikBit(int N) {
         int res = 0;
+        int N1 = N%10;
+        
+        System.out.println(N1);
         
         return res;
     }
