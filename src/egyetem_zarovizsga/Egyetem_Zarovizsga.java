@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package egyetem_zarovizsga;
+package allamvizsga;
 
 import java.util.Random;
 
@@ -10,7 +10,7 @@ import java.util.Random;
  *
  * @author tresz
  */
-public class Egyetem_Zarovizsga {
+public class Allamvizsga {
 
     /**
      * @param args the command line arguments
@@ -26,7 +26,15 @@ public class Egyetem_Zarovizsga {
         System.out.println("6. Fibonacci rekurzív: "+FibonacciRekurziv(10));
         System.err.println("7. Legnagyobb egész kitevő: "+LegnagyobbEgeszKitevo(25));
         System.err.println("8. Kilencesek száma: "+KilencesekSzama(25989));
-        System.err.println("9. Kettes szám második bitje: "+KettesMasodikBit(128));
+        System.err.println("9. Kettes szám második bitje: "+KettesMasodikBit(422));
+        System.err.println("10. Sorozat első 5 X-eé osztható eleme: "); SorozatOttel(8);
+        System.err.println("11. Pozitív osztók száma: "+PozitivOsztokSzama(6));
+        System.err.println("12. Szamjegyek maradnak: "+SzamjegyekMaradnak("rfds 435fs4g"));
+        System.err.println("13. Palindrom-e: "+PalindromE("abba"));
+        System.err.println("14. Minden szó kezdőbetűje nagybetű: "+SzoKezdobetuNagy("abba sd 23 kk"));
+        System.err.println("15. Karaktert eltávolít: "+KaraktertEltavolit("abba sd 23 kka",'k'));
+        System.err.println("16. Összes előfordulás: "+KarakterlancOsszesElofordulasa("abba sd 23 kka","kk"));
+        
         //System.out.println(NegyzetgyokRekurziv(50,25));
     }
     
@@ -182,13 +190,128 @@ számrendszerbeli felírásában a jobbról második bitje 1 vagy 0 (ne alakíts
     */    
     
     private static Integer KettesMasodikBit(int N) {
-        int res = 0;
-        int N1 = N%10;
+
+        int szam2 = N / 2;
         
-        System.out.println(N1);
+        return szam2 % 2;
+
+    }
+
+    
+    
+/*
+10. Írjon olyan függvényt vagy metódust, amelynek paramétere egy 1 < x < 10 természetes
+szám, és kiírja az 1,3,4,6,7,9,10,12,... sorozat első öt x-szel osztható elemét, azaz a sorozat
+i+1-edik tagja 2-vel nagyobb az i-ediknél, ha i páratlan, s eggyel nagyobb az i-ediknél, ha i
+páros!    
+    */
+
+    private static void SorozatOttel(int N) {
+        if(N<=1) return;
+        if(N>=10) return;
+        
+        int k=0;
+        int i=1;
+        int szam=0;
+        do{
+            if(i==1) szam=1;
+            else{
+                if(i%2==0) szam=szam+2;
+                else szam=szam+1;
+            }
+            if(szam%N==0) {System.out.print("; "+szam); k++;};
+            i++;
+        }while(k<5);
+    }
+
+/*
+11. Írjon olyan függvényt vagy metódust, amely a paraméterében megadott természetes szám
+pozitív osztóinak számával tér vissza!    
+    */
+    
+    private static Integer PozitivOsztokSzama(int N) {
+        int res=0;
+        
+        for(int i=1; i<=N; i++)
+            if(N%i==0) res++;
         
         return res;
+    }    
+
+/*
+12. Írjon olyan függvényt vagy metódust, amely egy karakterláncból vagy sztringből a
+számjegyek kivételével minden karaktert eltávolít!    
+    */    
+
+    private static String SzamjegyekMaradnak(String S) {
+        String res ="";
+        String tar="";
+        for(int i=0; i<S.length();i++)
+            if(S.charAt(i)>=48 && S.charAt(i)<=57) tar+=S.charAt(i);
+        res=tar;
+        return res;
     }
+
+/*
+13. Írjon olyan függvényt vagy metódust, amely egy karakterláncról vagy sztringről eldönti,
+hogy palindróma-e! (Balról olvasva ugyanaz, mint jobbról olvasva.)    
+    */    
+    private static String PalindromE(String S) {
+        String res="Nem";
+        boolean az=true;
+        for(int i=0; i<(S.length()/2); i++)
+           // for(int j=S.length()-1;i>=0;i--){
+                if(S.charAt(i)!=S.charAt((S.length()-1)-i)) az=false;
+            //}
+        if(az) res="Igen";            
+        return res;    
+    }    
+    
+/*
+14. Írjon olyan függvényt vagy metódust, amely egy, az angol ábécé betűit tartalmazó
+karakterláncban vagy sztringben minden szó kezdőbetűjét nagybetűre alakítja!    
+    */    
+    private static String SzoKezdobetuNagy(String S) {
+        String res="";
+        String tar="";
+        for(int i=0; i<S.length(); i++){
+            if(S.charAt(i)>=97 && S.charAt(i)<=122){
+                if(i==0) tar += Character.toString(S.charAt(i)-32);
+                else if(S.charAt(i-1)==32) tar += Character.toString(S.charAt(i)-32);
+                else tar += Character.toString(S.charAt(i));
+            }
+            else tar += Character.toString(S.charAt(i));
+            
+        }
+        res = tar;
+        return res;
+    }    
+
+/*
+15. Írjon olyan függvényt vagy metódust, amely egy karakterláncból vagy sztringből eltávolítja
+egy megadott karakter összes előfordulását!    
+    */    
+    private static String KaraktertEltavolit(String S, char c) {
+        String res="";
+        String tar="";
+        for(int i=0; i<S.length(); i++)
+            if(S.charAt(i)!=c) tar += Character.toString(S.charAt(i));
+        res=tar;
+        return res;
+    }
+
+    /*
+ 16. Írjon olyan függvényt vagy metódust, amely megszámolja egy adott karakterlánc vagy
+sztring összes előfordulását egy másik karakterláncban vagy sztringben!   
+    */
+    private static Integer KarakterlancOsszesElofordulasa(String abba_sd_23_kka, String kk) {
+        int res=0;
+        
+        
+        
+        return res;
+    }    
+    
     
 /*
     
@@ -286,8 +409,24 @@ legkisebb közös többszöröse hány számjegyből áll kettes számrendszerbe
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
     
     
 }
+
+
 
