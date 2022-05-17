@@ -18,7 +18,7 @@ public class Allamvizsga {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        if(PrimE(7)) System.out.println("1. Prím szám: "+"Prím"); else System.out.println("1. Prím szám: "+"Nem Prím");
+       if(PrimE(7)) System.out.println("1. Prím szám: "+"Prím"); else System.out.println("1. Prím szám: "+"Nem Prím");
         if(TokeletesE(6)) System.out.println("2. Tökéletes szám: "+"Tökéletes"); else System.out.println("2. Tökéletes szám: "+"Nem Tökéletes");
         System.out.println("3. Karakterkeverés: "+KarakterKeveres("Alma"));
         System.out.println("Faktoriálsi rekurzív: "+FaktorialisRekurziv(5));
@@ -33,7 +33,19 @@ public class Allamvizsga {
         System.err.println("13. Palindrom-e: "+PalindromE("abba"));
         System.err.println("14. Minden szó kezdőbetűje nagybetű: "+SzoKezdobetuNagy("abba sd 23 kk"));
         System.err.println("15. Karaktert eltávolít: "+KaraktertEltavolit("abba sd 23 kka",'k'));
-        System.err.println("16. Összes előfordulás: "+KarakterlancOsszesElofordulasa("abba sd 23 kka","kk"));
+        System.err.println("16. Összes előfordulás: "+KarakterlancOsszesElofordulasa("abba kksd 23 kka","kk"));
+        System.err.println("17. Angol ASCII negyzetszam: "); AdciiNegyzetszam();
+        System.err.println("18. Random string generátor: "+randomString());
+        System.err.println("19. Karakterláncba beszúr a: "+ BeszurA("alma", 'c'));
+        System.err.println("20. N alat a k: "+ kombinacio( 8, 3 ));
+        int[] sz = {8,2,4};
+        System.err.println("21. Van-e olyan szám, ami az összes többit osztja: "+ VanESzamOsztja( sz ));
+        int[] sz1 = {8,2,4,2};
+        System.err.println("22. Van-e olyan szám, ami az összes többinél többször: "+ VanESzamTobbszor( sz1 ));
+        int[] sz2 = { 1, 2, 3, 4, 5, 6, 2, 5, 6, 7, 8, 9, 10 };
+        System.err.println("23. Leghosszabb sorozat: "+ reszSorozatIndex(sz2) );
+        int[] sz3 = { 30, 2, 4, 5, 14, 52, 3, 1, 18 };
+        System.err.println("24. Legkisebb index: "+ LegkisebbIndex(sz3) );
         
         //System.out.println(NegyzetgyokRekurziv(50,25));
     }
@@ -304,13 +316,178 @@ egy megadott karakter összes előfordulását!
  16. Írjon olyan függvényt vagy metódust, amely megszámolja egy adott karakterlánc vagy
 sztring összes előfordulását egy másik karakterláncban vagy sztringben!   
     */
-    private static Integer KarakterlancOsszesElofordulasa(String abba_sd_23_kka, String kk) {
+    private static Integer KarakterlancOsszesElofordulasa(String S, String K) {
         int res=0;
-        
-        
-        
+        boolean talalat = false;
+        for(int i=0; i<S.length(); i++){
+            for(int j=0;j<K.length();j++){
+                if(S.charAt(i)==K.charAt(j)){                 
+                    talalat = true;                   
+                    i++;
+                    if(j==K.length()-1){ 
+                        res++;
+                        talalat=false;
+                        j=0;
+                        continue;
+                    }
+                }else{
+                    talalat = false;                
+                    j=0;
+                    break;
+                }                
+            }
+        }        
         return res;
+    }      
+
+/*
+17. Írjon olyan függvényt vagy metódust, amely kiírja az angol kisbetűs ábécé azon betűit,
+melyek ASCII kódja négyzetszám!    
+    */    
+    private static void AdciiNegyzetszam() {
+        for(int i=97; i<=122; i++){
+            for(int j=1; j<=11; j++){
+                if(j*j==i) System.out.println(", "+(char)i);
+            }
+        }
+    }
+    
+/*
+18. Írjon olyan függvényt vagy metódust, amely előállít egy 5 karakterből (angol kisbetűs ábécé
+karaktereit használva) álló véletlen karakterláncot vagy sztringet! Biztosítsa, hogy minden 5
+hosszú különböző betűkből álló sztring egyenlő valószínűséggel kerüljön kiválasztásra,
+feltéve, hogy a választott programozási nyelv véletlenszám-generátora egyenletes eloszlást
+biztosít!    
+    */
+    static String randomString() {
+
+        int a = (int)'a';
+        int z = (int)'z';
+        int rndInt;
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        System.out.println( a + ", " + z );
+
+        for( int i = 0; i < 5; i++ ) {
+            rndInt = Math.abs((int)rand.nextInt() % (z - a + 1)) + a;
+            sb.append( (char)rndInt );
+        }
+        return sb.toString();
+    }
+
+/*
+19.Írjon olyan függvényt vagy metódust, amely egy karakterláncba vagy sztringbe beszúr egy
+„a” karaktert véletlenül választott pozícióba (véletlenszám–generátor használható)!    
+    */    
+    static String BeszurA(String Str, char c){
+        Random rand = new Random();
+        int rnd = Math.abs((int)rand.nextInt() % Str.length());
+        return Str.substring(0,rnd)+c+Str.substring(rnd);
+    }
+
+/*
+20.Adjon olyan függvényt vagy metódust, ami adott két pozitív egész paramétere esetén
+megadja (n alatt a k)=n!/k!(n-k)! értékét. Használjon rekurziót! 
+    */
+    
+    static float kombinacio( int n, int k ) {
+        if( n >= k ) {
+            return fakt(n) / ( fakt( k ) * fakt( n - k ) );
+        }
+        else {
+            System.out.println( "Az n legyen nagyobb mint a k!" );
+            return 0;
+        }
+    }
+
+    static int fakt( int num ) {
+        if( num == 0 ) return 1;
+        else return num * fakt( num - 1 );
     }    
+
+/*
+21.Adjon olyan metódust vagy függvényt, ami eldönti, hogy a paramétereként megadott
+(pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többit osztja.
+(Maradékszámító függvény használható).    
+    */    
+private static String VanESzamOsztja(int[] Num) {
+    String res = "Nincs";
+    boolean van=true;
+    for(int i=0; i<Num.length; i++){
+        van=true;
+        for(int j=0; j<Num.length; j++)
+            if(Num[j]%Num[i]!=0){
+                van=false;
+                continue;
+                //break;
+            }    
+        if(van==true) res="Van";
+    }         
+    return res;
+}
+
+/*
+22.Adjon olyan metódust vagy függvényt, ami eldönti, hogy a paramétereként megadott
+(pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többinél
+többször fordul elő.
+*/
+private static String VanESzamTobbszor(int[] Num){
+    String res="Nincs";
+    int db0=0, db1=0;
+    for(int i=0; i<Num.length; i++){
+        db1=0;
+        for(int j=0; j<Num.length; j++){
+            if(Num[i]==Num[j]) 
+                if(i==0) db0++;
+                else db1++;
+        }
+        if(i!=0 && db1>db0) res="Van";
+    }
+    return res;
+}
+
+/*
+23.Adjon olyan metódust vagy függvényt, ami visszaadja, hogy a paramétereként megadott
+(pozitív egészekből álló) nemüres tömbben melyik index az, ahol a leghosszabb
+folyamatosan növekvő részsorozat kezdődik. Ha több ilyen index is van, az utolsót adja
+vissza.
+*/
+    private static int reszSorozatIndex(int[] Num) {
+        int index=0, indexTar=0, db=0, dbTar=0;       // index1, db1 az aktuális sorozat éréketi|||  index2, db2 a leghosszabb sorozat értékei
+        for(int i=0; i<Num.length-1; i++){
+            if(Num[i]+1==Num[i+1]){
+                if(db==0) {index = i; db++;}
+                else db++;
+            }else{
+                if(db>=dbTar) { indexTar=index; dbTar=db;}
+                db=0;
+            }
+            
+            if(i==Num.length-2) if(db>=dbTar) { indexTar=index;}  // utolsó előtti elemre érve (Num.length-2)
+        }
+        return indexTar;
+    }
+
+/*
+24.Adjon olyan metódust vagy függvényt, ami visszaadja, hogy a paramétereként megadott
+(pozitív egészekből álló) nemüres tömbben melyik az a legkisebb index, amire az index
+előtti elemek összege meghaladja a tömb első két elemének szorzatát. Ha nincs ilyen, 0-t
+adjon vissza.    
+    */    
+
+private static int LegkisebbIndex(int[] Num){
+    int res = 0;
+    int szorzElsoKetto = Num[0]*Num[1];
+    int osszeg = 1;
+    for(int i=0; i<Num.length; i++){
+        osszeg = 1;
+        for(int j=0; j<=i; j++) osszeg += Num[j];
+        if(osszeg>szorzElsoKetto) {res=i+1; break;} 
+    }
+    
+    return res;
+}    
     
     
 /*
@@ -423,10 +600,11 @@ legkisebb közös többszöröse hány számjegyből áll kettes számrendszerbe
 
 
 
+
+
+
+
         
     
     
 }
-
-
-
