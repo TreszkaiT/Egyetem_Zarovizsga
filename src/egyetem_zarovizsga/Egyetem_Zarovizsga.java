@@ -4,6 +4,9 @@
  */
 package egyetem_zarovizsga;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -25,7 +28,7 @@ public class Egyetem_Zarovizsga {
         System.err.println("4. Négyzetgyők: "+Negyzetgyok(25));    
         System.err.println("5. Köbgyök: "+kobgyok(2234.423));
         System.out.println("6. Fibonacci rekurzív: "+FibonacciRekurziv(10));
-        System.err.println("7. Legnagyobb egész kitevő: "+LegnagyobbEgeszKitevo(25));
+        System.err.println("7. Legnagyobb egész kitevő: "+LegnagyobbEgeszKitevo(3));
         System.err.println("8. Kilencesek száma: "+KilencesekSzama(25989));
         System.err.println("9. Kettes szám második bitje: "+KettesMasodikBit(422));
         System.err.println("10. Sorozat első 5 X-eé osztható eleme: "); SorozatOttel(8);
@@ -34,22 +37,22 @@ public class Egyetem_Zarovizsga {
         System.err.println("13. Palindrom-e: "+PalindromE("abba"));
         System.err.println("14. Minden szó kezdőbetűje nagybetű: "+SzoKezdobetuNagy("abba sd 23 kk"));
         System.err.println("15. Karaktert eltávolít: "+KaraktertEltavolit("abba sd 23 kka",'k'));
-        System.err.println("16. Összes előfordulás: "+KarakterlancOsszesElofordulasa("abba kksd 23 kka","kk"));
+        System.err.println("16. Összes előfordulás: "+KarakterlancOsszesElofordulasa("akkbba kksd 23 kka","kk"));
         System.err.println("17. Angol ASCII negyzetszam: "); AdciiNegyzetszam();
         System.err.println("18. Random string generátor: "+randomString());
-        System.err.println("19. Karakterláncba beszúr a: "+ BeszurA("alma", 'c'));
+        System.err.println("19. Karakterláncba beszúr a: "+ BeszurA("alma"));
         System.err.println("20. N alat a k: "+ kombinacio( 8, 3 ));
         int[] sz = {8,2,4};
         System.err.println("21. Van-e olyan szám, ami az összes többit osztja: "+ VanESzamOsztja( sz ));
-        int[] sz1 = {8,2,4,2};
+        int[] sz1 = {8,2,4,2,3};
         System.err.println("22. Van-e olyan szám, ami az összes többinél többször: "+ VanESzamTobbszor( sz1 ));
         int[] sz2 = { 1, 2, 3, 4, 5, 6, 2, 5, 6, 7, 8, 9, 10 };
         System.err.println("23. Leghosszabb sorozat: "+ reszSorozatIndex(sz2) );
         int[] sz3 = { 30, 2, 4, 5, 14, 52, 3, 1, 18 };
         System.err.println("24. Legkisebb index: "+ LegkisebbIndex(sz3) ); 
         System.err.println("25. Hanyadik pozíció: "+ HanyadikPozicio("Halló! Ez itt egy teszt láték.", 'l', 3) );
-        int[] arr = {2, 5, 23, 21, 3, 3, 8, 4, 66, 43, 98, 22};
-        System.err.println("26. Logaritmus: "+ indexOfNum(arr, 3) ); 
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+        System.err.println("26. Logaritmus: "+ BinarisLogaritmikus(arr, 6) ); 
         System.err.println("27. Paraméterének: "+ masodikSzam(51, 72) );
         char[][] arr1 = {{'q','b','c','d','q'},
                         {'a','q','c','q','c'},
@@ -58,17 +61,17 @@ public class Egyetem_Zarovizsga {
                         {'q','b','j','d','q'}};
         System.err.println("28. Főátlón kívül: "+ vanEOlyanElem(arr1) );
         System.err.println("29. Valós típusú: "+ valosTipusu(22.56) );
-        System.err.println("30. Fordít: "+ fordit(123) );
+        System.err.println("30. Fordít: "+ fordit(12345) );
                 int[][] arr2 = { {0,1,2,7,3,4,3,1,0,2},
-                        {0,1,2,7,4,5,6,7,8,9},
-                        {5,9,7,6,7,5,6,7,8,9},
-                        {0,1,2,5,2,2,3,4,2,1},
-                        {0,1,2,9,4,5,6,7,8,9},
-                        {0,1,2,8,4,5,6,7,8,9},
-                        {0,1,2,7,4,5,6,7,8,9},
-                        {0,1,2,8,4,5,6,7,8,9},
-                        {0,1,2,9,4,5,6,7,8,9},
-                        {0,1,2,8,4,5,6,7,8,9},
+                                 {0,1,2,7,4,5,6,7,8,9},
+                                 {5,9,7,6,7,5,6,7,8,9},
+                                 {0,1,2,5,2,2,3,4,2,1},
+                                 {0,1,2,9,4,5,6,7,8,9},
+                                 {0,1,2,8,4,5,6,7,8,9},
+                                 {0,1,2,7,4,5,6,7,8,9},
+                                 {0,1,2,8,4,5,6,7,8,9},
+                                 {0,1,2,9,4,5,6,7,8,9},
+                                 {0,1,2,8,4,5,6,7,8,9},
                     };
 
         System.err.println("31. Matix sor nagyobb oszlop kisebb: "+  vanELegkisebbElem( arr2 ) ); 
@@ -81,16 +84,12 @@ public class Egyetem_Zarovizsga {
     //    prímszám-e, vagy sem!
     private static boolean PrimE(int N){
         
-        boolean result = false;
-        
         int szamlalo = 0;
         for(int i=1; i<=N; i++){
             
             if(N%i == 0) szamlalo++;
         }
-        if(szamlalo<=2) result = true;
-        
-        return result;       
+        if(szamlalo<=2) return true; else return false;     
     }
     
     /*
@@ -116,7 +115,7 @@ szám-e, vagy sem! (pozitív osztóinak összege a szám kétszerese)
 véletlenszerűen összekeveri a karaktereket (véletlenszám–generátor használható)!
     */
 
-    private static String KarakterKeveres(String str) {
+    /*private static String KarakterKeveres(String str) {
         
         String result="";
         Random rand = new Random();
@@ -143,7 +142,21 @@ véletlenszerűen összekeveri a karaktereket (véletlenszám–generátor haszn
         
         return result;
     }
-    
+    */
+    private static String KarakterKeveres(String str) {
+        
+        Random rnd = new Random();
+        char[] ch = str.toCharArray();
+                
+        for(int i=0; i< str.length(); i++){
+            int j = rnd.nextInt(str.length());
+            char segedCh = ch[i];
+            ch[i] = ch[j];
+            ch[j] = segedCh;
+        }        
+        return new String(ch);
+    }
+
     
     private static int FaktorialisRekurziv(int N){
         if(N<1) return 1;
@@ -154,7 +167,7 @@ véletlenszerűen összekeveri a karaktereket (véletlenszám–generátor haszn
 szám négyzetgyökét adja vissza! Használja az xk+1=1/2*(xk+a/xk) sorozatot, amely a
 négyzetgyökéhez konvergál, ha x1=1.
     */
-    private static float Negyzetgyok(int N){
+    private static float Negyzetgyok(float N){
         
         int n=50;
 	float[] x = new float[n+1];
@@ -174,7 +187,7 @@ négyzetgyökéhez konvergál, ha x1=1.
     5. Írjon függvényt vagy metódust, amely egy valós szám köbgyökét adja vissza! Használja az
 xk+1=1/3*(2*xk+a/xk2) sorozatot, amely a köbgyökéhez konvergál, ha x1=1. ****************************
     */
-    public static double kobgyok(double a) {
+   /* public static double kobgyok(double a) {
 
         double x, y;
         x = 1;
@@ -186,7 +199,19 @@ xk+1=1/3*(2*xk+a/xk2) sorozatot, amely a köbgyökéhez konvergál, ha x1=1. ***
         
         return x;
     }
+    */ 
     
+    public static double kobgyok(double szam)
+        {
+            int n = 50;
+            double[] x = new double[n + 1];
+            x[1] = 1;
+            for (int k = 1; k < n; k++)
+                x[k + 1] = (2 * x[k] + (szam / (x[k] * x[k]))) / 3;
+            return x[n];
+        }
+
+       
     /*
     6. Írjon függvényt vagy metódust, amely kiszámolja az n-edik Fibonacci számot! A Fibonacci
 sorozatot az an=an-2+an-1 rekurzióval definiálja (n>2), ahol a1=a2=1.
@@ -206,7 +231,7 @@ sorozatot az an=an-2+an-1 rekurzióval definiálja (n>2), ahol a1=a2=1.
 legnagyobb egész kitevős hatványát, amely még éppen kisebb, mint 567!
     */
     
-    private static Integer LegnagyobbEgeszKitevo(int N) {
+    /*private static Integer LegnagyobbEgeszKitevo(int N) {
         //if(N>567) return false;
         int res = 0;
         if(N<567) res=1;  
@@ -217,7 +242,19 @@ legnagyobb egész kitevős hatványát, amely még éppen kisebb, mint 567!
         }while(N1>567);             // amíg hamis
         
         return res;
-    }    
+    } */  
+
+    private static Integer LegnagyobbEgeszKitevo(int N) {
+        //if(N>567) return false;
+        int res = 1;
+        int N1 = N;
+        do{
+            N1 *= N;
+            res++;
+        }while(N1<567);             // amíg igaz
+        
+        return --res;
+    }     
 
 /*
 8. Írjon olyan függvényt vagy metódust, amely egy természetes szám esetén kiírja, hogy a 9-es
@@ -322,7 +359,7 @@ hogy palindróma-e! (Balról olvasva ugyanaz, mint jobbról olvasva.)
 14. Írjon olyan függvényt vagy metódust, amely egy, az angol ábécé betűit tartalmazó
 karakterláncban vagy sztringben minden szó kezdőbetűjét nagybetűre alakítja!    
     */    
-    private static String SzoKezdobetuNagy(String S) {
+    /*private static String SzoKezdobetuNagy(String S) {
         String res="";
         String tar="";
         for(int i=0; i<S.length(); i++){
@@ -336,7 +373,36 @@ karakterláncban vagy sztringben minden szó kezdőbetűjét nagybetűre alakít
         }
         res = tar;
         return res;
-    }    
+    }  */
+
+        private static String SzoKezdobetuNagy(String str) {
+
+        String tar="";
+        
+        for(int i=0; i<str.length(); i++){
+            if(i==0) tar += Character.toString(str.charAt(i)-32);
+            else{
+                if(str.charAt(i-1)==32) tar += Character.toString(str.charAt(i)-32);
+                else  tar += Character.toString(str.charAt(i));
+            }            
+        }        
+        return tar;
+    }  
+
+        
+    /*private static String SzoKezdobetuNagy(String str) {
+
+        char[] ch = new char[str.length()];
+        
+        for(int i=0; i<str.length(); i++){
+            if(i==0) ch[i] = (char)(str.charAt(i)-32);
+            else{
+                if(str.charAt(i-1)==32) ch[i] = (char)(str.charAt(i)-32);
+                else ch[i] = str.charAt(i);
+            }            
+        }        
+        return new String(ch);
+    } */    
 
 /*
 15. Írjon olyan függvényt vagy metódust, amely egy karakterláncból vagy sztringből eltávolítja
@@ -355,7 +421,7 @@ egy megadott karakter összes előfordulását!
  16. Írjon olyan függvényt vagy metódust, amely megszámolja egy adott karakterlánc vagy
 sztring összes előfordulását egy másik karakterláncban vagy sztringben!   
     */
-    private static Integer KarakterlancOsszesElofordulasa(String S, String K) {
+ /*   private static Integer KarakterlancOsszesElofordulasa(String S, String K) {
         int res=0;
         boolean talalat = false;
         for(int i=0; i<S.length(); i++){
@@ -378,7 +444,23 @@ sztring összes előfordulását egy másik karakterláncban vagy sztringben!
         }        
         return res;
     }      
-
+*/
+    private static Integer KarakterlancOsszesElofordulasa(String S, String K) {
+        int db=0;
+         for(int i=0; i<S.length(); i++){
+            for(int j=0;j<K.length();j++){
+                if(S.charAt(i)==K.charAt(j)){                                                       
+                    i++;
+                    if((j==K.length()-1)) db++;                    
+                }else{
+                    if(j!=0) i--;     
+                    break;
+                }                
+            }
+        }        
+        return db;
+    }    
+    
 /*
 17. Írjon olyan függvényt vagy metódust, amely kiírja az angol kisbetűs ábécé azon betűit,
 melyek ASCII kódja négyzetszám!    
@@ -398,7 +480,49 @@ hosszú különböző betűkből álló sztring egyenlő valószínűséggel ker
 feltéve, hogy a választott programozási nyelv véletlenszám-generátora egyenletes eloszlást
 biztosít!    
     */
+    /*static String randomString() {
+
+        int a = (int)'a';
+        int z = (int)'z';
+        
+        ArrayList<Integer> abc = new ArrayList<Integer>();
+        char[] ch = new char[5];
+        
+        for(int i=a; i<=z; i++) abc.add(i);
+
+        Random rnd = new Random();
+
+        for( int i = 0; i < 5; i++ ) {
+            int rnd1 = rnd.nextInt(abc.size());
+            ch[i] = (char)((int)abc.get(rnd1));
+            abc.remove(rnd1);
+        }
+        return new String(ch);
+    }  */ 
+    
+    
     static String randomString() {
+
+        int a = (int)'a';
+        int z = (int)'z';
+        
+        ArrayList<Character> abc = new ArrayList<Character>();
+ 
+        char[] ch = new char[5];
+        
+        for(int i=a; i<=z; i++) abc.add((char)i);
+
+        Random rnd = new Random();
+
+        for( int i = 0; i < 5; i++ ) {
+            int ri = rnd.nextInt(abc.size());
+            ch[i]  = abc.get(ri);
+            abc.remove(ri);
+        }
+        return new String(ch);
+    }       
+    
+    /*static String randomString() {
 
         int a = (int)'a';
         int z = (int)'z';
@@ -413,18 +537,24 @@ biztosít!
             sb.append( (char)rndInt );
         }
         return sb.toString();
-    }
+    }*/
 
 /*
 19.Írjon olyan függvényt vagy metódust, amely egy karakterláncba vagy sztringbe beszúr egy
 „a” karaktert véletlenül választott pozícióba (véletlenszám–generátor használható)!    
     */    
-    static String BeszurA(String Str, char c){
+    /*static String BeszurA(String Str, char c){
         Random rand = new Random();
         int rnd = Math.abs((int)rand.nextInt() % Str.length());
         return Str.substring(0,rnd)+c+Str.substring(rnd);
-    }
+    }*/
 
+    static String BeszurA(String str){
+        Random rnd = new Random();
+        int i = rnd.nextInt(str.length());
+        return str.substring(0,i)+'a'+str.substring(i);
+    }    
+    
 /*
 20.Adjon olyan függvényt vagy metódust, ami adott két pozitív egész paramétere esetén
 megadja (n alatt a k)=n!/k!(n-k)! értékét. Használjon rekurziót! 
@@ -450,20 +580,17 @@ megadja (n alatt a k)=n!/k!(n-k)! értékét. Használjon rekurziót!
 (pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többit osztja.
 (Maradékszámító függvény használható).    
     */    
-private static String VanESzamOsztja(int[] Num) {
-    String res = "Nincs";
+private static boolean VanESzamOsztja(int[] Num) {
     boolean van=true;
     for(int i=0; i<Num.length; i++){
         van=true;
         for(int j=0; j<Num.length; j++)
             if(Num[j]%Num[i]!=0){
                 van=false;
-                continue;
-                //break;
             }    
-        if(van==true) res="Van";
+        if(van==true) return true;
     }         
-    return res;
+    return false;
 }
 
 /*
@@ -471,7 +598,7 @@ private static String VanESzamOsztja(int[] Num) {
 (pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többinél
 többször fordul elő.
 */
-private static String VanESzamTobbszor(int[] Num){
+/*private static String VanESzamTobbszor(int[] Num){
     String res="Nincs";
     int db0=0, db1=0;
     for(int i=0; i<Num.length; i++){
@@ -484,6 +611,19 @@ private static String VanESzamTobbszor(int[] Num){
         if(i!=0 && db1>db0) res="Van";
     }
     return res;
+}*/
+
+
+private static boolean VanESzamTobbszor(int[] Num){
+    int db0, db1;
+    for(int i=0; i<Num.length; i++){
+        db0=0; db1=0;
+        for(int j=0; j<Num.length; j++){
+            if(Num[i]==Num[j]) db0++; else db1++;
+        }
+        if(db0>db1) return true;
+    }
+    return false;
 }
 
 /*
@@ -514,7 +654,7 @@ vissza.
 előtti elemek összege meghaladja a tömb első két elemének szorzatát. Ha nincs ilyen, 0-t
 adjon vissza.    
     */    
-
+/*
 private static int LegkisebbIndex(int[] Num){
     int res = 0;
     int szorzElsoKetto = Num[0]*Num[1];
@@ -527,19 +667,39 @@ private static int LegkisebbIndex(int[] Num){
     
     return res;
 }    
+*/
+
+private static int LegkisebbIndex(int[] Num){
+    int osszeg = 1;
+    for(int i=0; i<Num.length; i++){
+        if(osszeg<=Num[0]*Num[1]) osszeg+=Num[i];
+        else return i;
+    }
+    return 0;
+}    
+
 
 /*
 25.Adjon egy metódust vagy függvényt, ami paraméterként adott s sztring/karaktertömb, c
 karakter és n pozitív egész szám esetén megadja, hogy a c karakter n-edik előfordulása
 hányadik pozíción van az „s” sztringben.
 */
-private static int HanyadikPozicio(String s, char c, int n){
+/*private static int HanyadikPozicio(String s, char c, int n){
     int pos = 0;
     for(int i=0; i<s.length(); i++ ){
         if(s.charAt(i)==c) pos++;
         if(pos==n) {pos=i; break;}
     }
     return pos;
+}*/
+
+private static int HanyadikPozicio(String s, char c, int n){
+    int pos = 0;
+    for(int i=0; i<s.length(); i++ ){
+        if(s.charAt(i)==c) pos++;
+        if(pos==n) return i;
+    }
+    return 0;
 }
 
 /************************************************************************************************************************
@@ -548,7 +708,7 @@ tömbben a tömb hosszának logaritmusával arányos lépésszám alatt megkeres
 paraméterként kapott egész első előfordulásának indexét, illetve ha nincs ilyen, akkor -1-et
 ad vissza. (pl. a bináris keresés)
 */
-    static int indexOfNum( int[] arr, int num ) {
+    /*static int indexOfNum( int[] arr, int num ) {
     
         int logHossz = (int)Math.log( (double)(arr.length) );
 
@@ -558,8 +718,54 @@ ad vissza. (pl. a bináris keresés)
             }
         }
         return -1;    
-    }
+    }*/
 
+    /*static int BinarisLogaritmikus( int[] arr, int Num ) {
+    
+        int A = 0;
+        int B = arr.length-1;
+        int K = 0;
+
+        do{
+            K=(int)((A+B)/2);
+            if(arr[K]>Num) B=K-1;
+            if(arr[K]<Num) A=K+1;
+        }while(A<B && arr[K]!=Num);
+        
+        if(A<=B) return K; else return -1;  
+    }  */  
+    
+    
+    static int BinarisLogaritmikus( int[] arr, int Num ) {
+    
+        int A = 0;
+        int B = arr.length-1;
+        int K = 0;
+
+        while(A<=B){
+            K=(A+B)/2;
+            if(arr[K]==Num) return K;             
+            if(arr[K]>Num) B=K-1;
+            if(arr[K]<Num) A=K+1;
+        };        
+        return -1;  
+    }   
+    
+    
+    
+ /* public static int BinarisLogaritmikus(int[] tomb, int szam)
+        {
+            int min = 0, max = tomb.length-1;
+            while (min <= max)
+            {
+                int mid = min + (max - min) / 2;
+                if (tomb[mid] == szam) return mid;
+                if (tomb[mid] > szam) max = mid - 1;
+                else min = mid + 1;
+            }
+            return -1;
+        }    
+    */
 /*
 27.Írjon függvényt vagy metódust, mely visszaadja két egész paramétere szorzatának balról
 második számjegyét! (a megoldás során ne használjon sztringeket/karaktertömböket)    
@@ -609,7 +815,7 @@ private static int valosTipusu(double N){
 30.Írjon függvényt vagy metódust, mely pozitív egész paraméterét fordítva adja vissza, pl.
 fordit(234) eredménye 432! (a megoldás során ne használjon sztringeket/karaktertömböket)
 */
-private static int fordit(int N){
+/*private static int fordit(int N){
     int Sz=0;
     do{
         Sz = Sz*10 + N%10;
@@ -617,7 +823,17 @@ private static int fordit(int N){
     }while(N!=0);
     
     return Sz;
+}*/
+
+private static int fordit(int N){
+    int Sz=0;
+    while(N>0){
+        Sz = Sz*10 + N%10;
+        N = N/10;
+    }    
+    return Sz;
 }
+
 
 /*
 31.Írjon függvényt vagy metódust, mely a paraméterként kapott 10x10-es mátrixról eldönti,
@@ -627,7 +843,7 @@ private static boolean vanELegkisebbElem(int[][] Tomb){
     
     int sor = 0, indexI=0, indexJ=0, oszlop=0;
     for(int i=0; i<10; i++){
-        sor=0;
+        sor=Tomb[i][0];
         for(int j=0; j<10; j++){
             if(Tomb[i][j]>sor) {sor=Tomb[i][j]; indexI=i; indexJ=j;}
         }
@@ -651,12 +867,10 @@ private static int MennyiSzam(int k, int m, int n){
     
     for(int i=k; i<=m; i++ ){
         oszto=0;
-        for(int j=1; j<=i; j++)
-            if(i%j==0) oszto++;
-        
+        for(int j=2; j<=i/2; j++)
+            if(i%j==0) oszto++;        
         if(oszto==n) db++;
-    }
-    
+    }    
     return db;
 }
 
@@ -664,7 +878,7 @@ private static int MennyiSzam(int k, int m, int n){
 33.Írjon függvényt vagy metódust, mely visszaadja, hogy két pozitív egész paraméterének
 legkisebb közös többszöröse hány számjegyből áll kettes számrendszerben. 
 */
-    static int hanySzamjegyKettesben( int num1, int num2 ) {
+    /*static int hanySzamjegyKettesben( int num1, int num2 ) {
 
         int lkkt = 1;
         int szamjegy = 0;
@@ -685,123 +899,43 @@ legkisebb közös többszöröse hány számjegyből áll kettes számrendszerbe
         }
         return szamjegy;
     }
+   */ 
 
+        public static int hanySzamjegyKettesben(int szam1, int szam2)
+        {
+            int lkkt = (szam1 < szam2) ? szam1 : szam2;
 
-/*
-    
-Feladatsor
-1. Írjon olyan függvényt vagy metódust, amely egy természetes számról eldönti, hogy
-prímszám-e, vagy sem!
-2. Írjon olyan függvényt vagy metódust, amely egy természetes számról eldönti, hogy tökéletes
-szám-e, vagy sem! (pozitív osztóinak összege a szám kétszerese)
-3. Írjon olyan függvényt vagy metódust, amely egy karakterláncban vagy sztringben
-véletlenszerűen összekeveri a karaktereket (véletlenszám–generátor használható)!
-4. A következő közelítő formulát használva írjon függvényt vagy metódust, amely egy valós
-szám négyzetgyökét adja vissza! Használja az xk+1=1/2*(xk+a/xk) sorozatot, amely a
-négyzetgyökéhez konvergál, ha x1=1.
-5. Írjon függvényt vagy metódust, amely egy valós szám köbgyökét adja vissza! Használja az
-xk+1=1/3*(2*xk+a/xk
-2
-) sorozatot, amely a köbgyökéhez konvergál, ha x1=1.
-6. Írjon függvényt vagy metódust, amely kiszámolja az n-edik Fibonacci számot! A Fibonacci
-sorozatot az an=an-2+an-1 rekurzióval definiálja (n>2), ahol a1=a2=1.
-7. Írjon olyan függvényt vagy metódust, amely egy természetes számhoz visszaadja azt a
-legnagyobb egész kitevős hatványát, amely még éppen kisebb, mint 567!
-8. Írjon olyan függvényt vagy metódust, amely egy természetes szám esetén kiírja, hogy a 9-es
-számjegyből hány darabot tartalmaz (ne alakítsa át sztringgé/karaktertömbbé)!
-9. Írjon olyan függvényt vagy metódust, amely egy természetes számról eldönti, hogy a kettes
-számrendszerbeli felírásában a jobbról második bitje 1 vagy 0 (ne alakítsa át sztringgé/karaktertömbbé)!
-10. Írjon olyan függvényt vagy metódust, amelynek paramétere egy 1 < x < 10 természetes
-szám, és kiírja az 1,3,4,6,7,9,10,12,... sorozat első öt x-szel osztható elemét, azaz a sorozat
-i+1-edik tagja 2-vel nagyobb az i-ediknél, ha i páratlan, s eggyel nagyobb az i-ediknél, ha i
-páros!
-11. Írjon olyan függvényt vagy metódust, amely a paraméterében megadott természetes szám
-pozitív osztóinak számával tér vissza!
-12. Írjon olyan függvényt vagy metódust, amely egy karakterláncból vagy sztringből a
-számjegyek kivételével minden karaktert eltávolít!
-13. Írjon olyan függvényt vagy metódust, amely egy karakterláncról vagy sztringről eldönti,
-hogy palindróma-e! (Balról olvasva ugyanaz, mint jobbról olvasva.)
-14. Írjon olyan függvényt vagy metódust, amely egy, az angol ábécé betűit tartalmazó
-karakterláncban vagy sztringben minden szó kezdőbetűjét nagybetűre alakítja!
-15. Írjon olyan függvényt vagy metódust, amely egy karakterláncból vagy sztringből eltávolítja
-egy megadott karakter összes előfordulását!
-16. Írjon olyan függvényt vagy metódust, amely megszámolja egy adott karakterlánc vagy
-sztring összes előfordulását egy másik karakterláncban vagy sztringben!
-17. Írjon olyan függvényt vagy metódust, amely kiírja az angol kisbetűs ábécé azon betűit,
-melyek ASCII kódja négyzetszám!
-18. Írjon olyan függvényt vagy metódust, amely előállít egy 5 karakterből (angol kisbetűs ábécé
-karaktereit használva) álló véletlen karakterláncot vagy sztringet! Biztosítsa, hogy minden 5
-hosszú különböző betűkből álló sztring egyenlő valószínűséggel kerüljön kiválasztásra,
-feltéve, hogy a választott programozási nyelv véletlenszám-generátora egyenletes eloszlást
-biztosít!
-19.Írjon olyan függvényt vagy metódust, amely egy karakterláncba vagy sztringbe beszúr egy
-„a” karaktert véletlenül választott pozícióba (véletlenszám–generátor használható)!
-20.Adjon olyan függvényt vagy metódust, ami adott két pozitív egész paramétere esetén
-megadja (n alatt a k)=n!/k!(n-k)! értékét. Használjon rekurziót!
-21.Adjon olyan metódust vagy függvényt, ami eldönti, hogy a paramétereként megadott
-(pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többit osztja.
-(Maradékszámító függvény használható).
-22.Adjon olyan metódust vagy függvényt, ami eldönti, hogy a paramétereként megadott
-(pozitív egészekből álló) nemüres tömbben van-e olyan szám, ami az összes többinél
-többször fordul elő.
-23.Adjon olyan metódust vagy függvényt, ami visszaadja, hogy a paramétereként megadott
-(pozitív egészekből álló) nemüres tömbben melyik index az, ahol a leghosszabb
-folyamatosan növekvő részsorozat kezdődik. Ha több ilyen index is van, az utolsót adja
-vissza.
-24.Adjon olyan metódust vagy függvényt, ami visszaadja, hogy a paramétereként megadott
-(pozitív egészekből álló) nemüres tömbben melyik az a legkisebb index, amire az index
-előtti elemek összege meghaladja a tömb első két elemének szorzatát. Ha nincs ilyen, 0-t
-adjon vissza.
-25.Adjon egy metódust vagy függvényt, ami paraméterként adott s sztring/karaktertömb, c
-karakter és n pozitív egész szám esetén megadja, hogy a c karakter n-edik előfordulása
-hányadik pozíción van az „s” sztringben.
-26.Adjon metódust vagy függvényt, ami a paraméterként kapott, egészekből álló rendezett
-tömbben a tömb hosszának logaritmusával arányos lépésszám alatt megkeresi a
-paraméterként kapott egész első előfordulásának indexét, illetve ha nincs ilyen, akkor -1-et
-ad vissza. (pl. a bináris keresés)
-27.Írjon függvényt vagy metódust, mely visszaadja két egész paramétere szorzatának balról
-második számjegyét! (a megoldás során ne használjon sztringeket/karaktertömböket)
-28.Írjon függvényt vagy metódust, mely eldönti, hogy a paraméterként kapott 5x5-ös
-/karakterekből álló/ tömbben a főátlóban van-e olyan elem, mely a főátlón kívül is
-megjelenik a tömbben!
-29.Írjon függvényt vagy metódust, mely valós típusú paraméterének azt a számjegyét adja
-vissza, amelyik a tizedes pont után áll! (a megoldás során ne használjon
-sztringeket/karaktertömböket)
-30.Írjon függvényt vagy metódust, mely pozitív egész paraméterét fordítva adja vissza, pl.
-fordit(234) eredménye 432! (a megoldás során ne használjon sztringeket/karaktertömböket)
-31.Írjon függvényt vagy metódust, mely a paraméterként kapott 10x10-es mátrixról eldönti,
-hogy van-e olyan eleme, mely sorában nagyobb és oszlopában pedig kisebb a többi elemnél!
-32.Írjon függvényt vagy metódust, mely visszaadja, hogy k-tól m-ig hány olyan szám van,
-melyeknek n db valódi osztója van! (n, k és m paraméter).
-33.Írjon függvényt vagy metódust, mely visszaadja, hogy két pozitív egész paraméterének
-legkisebb közös többszöröse hány számjegyből áll kettes számrendszerben.    
-    
-    */
+            while (lkkt % szam1 != 0 || lkkt % szam2 != 0) lkkt++;
+
+            int db = 0;
+            while (lkkt > 0)
+            {
+                lkkt /= 2;
+                db++;
+            }
+
+            return db;
+        }
+  /*
+        static int hanySzamjegyKettesben(int x, int y) {
+        int a = x;
+        int b = y;
+        int t;
+        while (b > 0) {
+            t = b;
+            b = a % b;
+            a = t;
+        }
+        int res = x*y/a;
+        int count = 0;
+        while (res != 0) {
+            res /= 2;
+            count++;
+        }
+        return count;
+    }
+*/
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    
 }
